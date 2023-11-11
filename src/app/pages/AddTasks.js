@@ -31,16 +31,12 @@ const AddTasks = () => {
   const [tasksArray, setTasksArray] = useState([]);
 
   const [successMsg, setSuccessMsg] = useState("");
-  const [deleteMsg, setDeleteMsg] = useState("");
-  const [completedMsg, setCompletedMsg] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
       setSuccessMsg("");
-      setDeleteMsg("");
-      setCompletedMsg("");
     }, 4000);
-  }, [successMsg, deleteMsg, completedMsg]);
+  }, [successMsg]);
 
   const inputChange = (e) => {
     setTask(e.target.value);
@@ -57,7 +53,7 @@ const AddTasks = () => {
       setTasksArray([...tasksArray, newTask]);
       setTask("");
       // task added success
-      setSuccessMsg("Task Added Successfully");
+      setSuccessMsg("Task Added Successfully!");
     }
   };
 
@@ -66,19 +62,19 @@ const AddTasks = () => {
     newTasks[index].completed = !newTasks[index].completed;
     setTasksArray(newTasks);
     // task completed success
-    setCompletedMsg("Task Completed Successfully");
+    setSuccessMsg("Task Completed Successfully!");
   };
 
   const handleDelete = (index) => {
     setTasksArray(tasksArray.filter((_, i) => i !== index));
     // task deleted success
-    setDeleteMsg("Task Deleted Successfully");
+    setSuccessMsg("Task Deleted Successfully!");
   };
 
   const handleDeleteAll = () => {
     // if no data alert there is no data
     if (Object.keys(tasksArray).length === 0) {
-      alert("There is no data to delete");
+      alert("There is no data to delete!");
       return;
     }
     //prompt alert
@@ -137,25 +133,15 @@ const AddTasks = () => {
           alignItems="center"
         >
           {/* success message */}
+
           {successMsg !== "" ? (
-            <Alert variant="filled" severity="info" size="small">
-              Task Added Successfully
-            </Alert>
-          ) : null}
-          {/* delete message */}
-          {deleteMsg !== "" ? (
             <Alert variant="filled" severity="success" size="small">
-              Task Deleted Successfully
-            </Alert>
-          ) : null}
-          {/* completed message */}
-          {completedMsg !== "" ? (
-            <Alert variant="filled" severity="success" size="small">
-              Task Completed Successfully
+              {successMsg}
             </Alert>
           ) : null}
         </Grid>
       </Grid>
+      {/* add task component (child component) with props */}
       <AllTasks
         tasks={tasksArray}
         handleCompleted={handleCompleted}
