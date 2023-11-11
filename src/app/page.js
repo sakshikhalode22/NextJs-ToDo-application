@@ -22,7 +22,7 @@ export default function Home() {
       <Typography variant="h6" gutterBottom sx={{ textAlign: "center" }}>
         Please add your todo tasks
       </Typography>
-      {/* add task component */}
+      {/* add task component (child component) without props */}
       <AddTasks />
     </div>
   );

@@ -37,7 +37,6 @@ const AllTasks = (props) => {
   const allTasks = props.tasks;
 
   const [pendingTasks, setPendingTasks] = useState([]);
-  console.log(pendingTasks.length);
   const [completedTasks, setCompletedTasks] = useState([]);
 
   // get pending tasks
@@ -132,17 +131,10 @@ const AllTasks = (props) => {
                   <div>
                     <ListItemButton>
                       <ListItemIcon>
-                        <WarningIcon color="warning" />
+                        <CircleIcon color="success" />
                       </ListItemIcon>
 
                       <ListItemText primary={task.task} />
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => props.handleCompleted(index)}
-                      >
-                        <CheckCircleIcon />
-                      </Button>
                       <Button
                         variant="contained"
                         color="error"
