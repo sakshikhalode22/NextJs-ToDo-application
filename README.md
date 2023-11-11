@@ -3,7 +3,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 After cloning Repo:
+
+```bash
 npm install
+git fetch origin
+```
+
 
 Run the development server:
 
