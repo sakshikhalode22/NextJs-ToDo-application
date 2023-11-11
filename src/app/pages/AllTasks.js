@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Button,
@@ -33,7 +33,21 @@ const useStyles = makeStyles({
 const AllTasks = (props) => {
   const classes = useStyles();
 
+  // get tasks from props
   const allTasks = props.tasks;
+
+  const [pendingTasks, setPendingTasks] = useState([]);
+  console.log(pendingTasks.length);
+  const [completedTasks, setCompletedTasks] = useState([]);
+
+  // get pending tasks
+  useEffect(() => {
+    const pendingTasks = allTasks.filter((task) => task.completed === false);
+    setPendingTasks(pendingTasks);
+
+    const completedTasks = allTasks.filter((task) => task.completed === true);
+    setCompletedTasks(completedTasks);
+  }, [allTasks]);
 
   return (
     <Grid
@@ -56,10 +70,10 @@ const AllTasks = (props) => {
           aria-labelledby="nested-list-subheader"
           subheader={"Pending Tasks"}
         >
-          {allTasks.map((task, index) => {
-            return (
-              <div key={index}>
-                {task.completed === false ? (
+          {pendingTasks.length !== 0 ? (
+            pendingTasks.map((task, index) => {
+              return (
+                <div key={index}>
                   <div>
                     <ListItemButton>
                       <ListItemIcon>
@@ -86,10 +100,17 @@ const AllTasks = (props) => {
                       </Button>
                     </ListItemButton>
                   </div>
-                ) : null}
-              </div>
-            );
-          })}
+                </div>
+              );
+            })
+          ) : (
+            <div>
+              <ListItemText
+                sx={{ marginTop: "100px" }}
+                primary={"No Pending Tasks"}
+              />
+            </div>
+          )}
         </List>
       </Grid>
       <Grid item xs={5} sm={5} md={5} lg={5} className={classes.root}>
@@ -104,17 +125,24 @@ const AllTasks = (props) => {
           aria-labelledby="nested-list-subheader"
           subheader={"Completed Tasks"}
         >
-          {allTasks.map((task, index) => {
-            return (
-              <div key={index}>
-                {task.completed === true ? (
+          {completedTasks.length !== 0 ? (
+            completedTasks.map((task, index) => {
+              return (
+                <div key={index}>
                   <div>
                     <ListItemButton>
                       <ListItemIcon>
-                        <CircleIcon color="success" />
+                        <WarningIcon color="warning" />
                       </ListItemIcon>
 
                       <ListItemText primary={task.task} />
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() => props.handleCompleted(index)}
+                      >
+                        <CheckCircleIcon />
+                      </Button>
                       <Button
                         variant="contained"
                         color="error"
@@ -127,10 +155,17 @@ const AllTasks = (props) => {
                       </Button>
                     </ListItemButton>
                   </div>
-                ) : null}
-              </div>
-            );
-          })}
+                </div>
+              );
+            })
+          ) : (
+            <div>
+              <ListItemText
+                sx={{ marginTop: "100px" }}
+                primary={"No Completed Tasks"}
+              />
+            </div>
+          )}
         </List>
       </Grid>
       <Grid
